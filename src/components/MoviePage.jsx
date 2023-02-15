@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,8 +12,8 @@ import {
 const MoviePage = () => {
 	const movies = useSelector((state) => state.movies[0]);
 	return (
-		<div className="text-[#f9f9f9] min-h-[calc(100vh-17rem)] pl-10 bg-[#151722]">
-			<div className="flex relative h-[600px] justify-end">
+		<div className="text-[#f9f9f9] min-h-[calc(100vh-17rem)] pl-20 bg-[#151722]">
+			<div className="flex relative h-[600px] justify-end mb-10">
 				<div className="h-[600px] overflow-hidden">
 					<img
 						src={movies?.Poster}
@@ -23,7 +24,7 @@ const MoviePage = () => {
 				<div className="absolute top-0 w-full h-full movieGradient">
 					<div className="flex flex-col relative">
 						<div className="pb-10">
-							<div className="flex flex-col w-[40%] pt-10 h-full">
+							<div className="flex flex-col w-[40%] pt-20 h-full">
 								<h1 className="text-5xl">{movies?.Title}</h1>
 								<div className="flex gap-5 mt-16 text-sm items-center">
 									<p>{movies?.Rated}</p>
@@ -37,31 +38,45 @@ const MoviePage = () => {
 								</div>
 								<p className="text-sm">{movies?.Genre}</p>
 								<div className="flex gap-5 items-center mt-7">
-									<button className="border-2 rounded-md font-bold px-6 py-3 flex items-center text-[#050609] bg-[#f9f9f9]">
+									<button className="border-2 rounded-md font-bold px-6 py-3 flex items-center text-[#050609] bg-[#f9f9f9] hover:bg-[#929292] hover:border-[#929292] transition-colors ease-in-out duration-300">
 										<FontAwesomeIcon
 											icon={faPlay}
 											className="text-lg text-[#050609] mr-4"
 										/>{" "}
 										PLAY
 									</button>
-									<button className="border-2 bg-[#050609] rounded-md font-bold px-5 py-3">
+									<button className="border-2 bg-[#050609] rounded-md font-bold px-5 py-3 hover:bg-[#f9f9f9] hover:text-[#050609] transition-colors ease-in-out duration-300">
 										TRAILER
 									</button>
-									<button className="rounded-full bg-[#050609] border-2 py-2 px-3">
+									<button className="rounded-full bg-[#050609] border-2 py-2 px-3 hover:bg-[#f9f9f9] hover:text-[#050609] transition-colors ease-in-out duration-300">
 										<FontAwesomeIcon icon={faPlus} className="text-lg" />
 									</button>
-									<button className="rounded-full bg-[#050609] border-2 p-2">
+									<button className="rounded-full bg-[#050609] border-2 p-2 hover:bg-[#f9f9f9] hover:text-[#050609] transition-colors ease-in-out duration-300">
 										<FontAwesomeIcon icon={faUserGroup} className="text-xl" />
 									</button>
 								</div>
-								<p className="text-2xl pt-5">{movies?.Plot}</p>
+								<p className="text-xl pt-5">{movies?.Plot}</p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div>
-				<p>Suggested, extras, etc.</p>
+				<div className="flex gap-14 font-bold text-xl border-b-2 w-[90%]">
+					<Link to="#" className="pb-5">
+						SUGGESTED
+					</Link>
+					<Link to="#" className="pb-5">
+						EXTRAS
+					</Link>
+					<Link to="#" className="pb-5">
+						VERSIONS
+					</Link>
+					<Link to="#" className="pb-5">
+						DETAILS
+					</Link>
+				</div>
+				<div></div>
 			</div>
 		</div>
 	);

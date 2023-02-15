@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { searchMovie, reset } from "../reducers/movieSlice";
 import MovieCards from "./MovieCards";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SearchMovies = () => {
-	// const [movieToAdd, setMovieToAdd] = useState("");
 	const movies = useSelector((state) => state.movies);
 	const dispatch = useDispatch();
 
@@ -15,14 +15,22 @@ const SearchMovies = () => {
 		dispatch(reset());
 	}, []);
 
-	const apiCall = async () => {
-		const url = import.meta.env.VITE_URL_SEARCH_ALL + movieToSearch;
-		const rawData = await fetch(url);
-		const json = await rawData.json();
+	useEffect(() => {
+		const getData = setTimeout(() => {
+			const apiCall = async () => {
+				const url = import.meta.env.VITE_URL_SEARCH_ALL + movieToSearch;
+				const rawData = await fetch(url);
+				const json = await rawData.json();
+				dispatch(searchMovie(json.Search));
+			};
+			apiCall();
+		}, 1000);
+		return () => clearTimeout(getData);
+	}, [movieToSearch]);
 
-		console.log(json.Search);
-		// dispatch is storing the movie we searched for in state. using the useSelector above,
-		dispatch(searchMovie(json.Search));
+	const resetInput = () => {
+		dispatch(reset());
+		setMovieToSearch("");
 	};
 
 	return (
@@ -31,27 +39,23 @@ const SearchMovies = () => {
 				<input
 					className="w-full h-28 bg-[#3b3d47] text-5xl text-white pl-14 font-bold focus:outline-none"
 					type="text"
-					autoFocus
 					placeholder="Search by title"
 					onChange={(e) => setMovieToSearch(e.target.value)}
+					value={movieToSearch}
 				/>
-				<button
-					className="w-[200px] text-2xl text-white"
-					onClick={() => apiCall()}>
-					Search Movies
-				</button>
+				{movieToSearch && (
+					<button
+						className="w-[200px] text-2xl text-white"
+						onClick={() => resetInput()}>
+						<FontAwesomeIcon />
+					</button>
+				)}
 			</div>
 			<div className="flex gap-5 flex-wrap justify-center my-5">
-				{/* {movies?.length !== 0 ? (
-					movies?.map((movie) => <MovieCards movie={movie} />)
-				) : (
-					<p>Search for a movie!</p>
-				)} */}
 				{movies?.map((movie) => (
 					<MovieCards movie={movie} />
 				))}
 			</div>
-			{/* h-[calc(100%-17rem)] */}
 		</div>
 	);
 };
